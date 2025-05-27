@@ -2,15 +2,15 @@ import { json } from '@sveltejs/kit';
 import { supabase } from '$lib/supabaseClient';
 
 export async function POST({ request, cookies }) {
-	const test = await request.json();
-	console.log('Received data:', test);
+	const data = await request.json();
+	console.log('Received data:', data);
 
 	// write to supabase
-	const { data, error } = await supabase.from('Recipes').insert({
-		title: 'Spaghetti Bolognese',
-		incredients: [],
-		description: 'A classic Italian pasta dish',
-		portions: 4
+	const { res, error } = await supabase.from('Recipes').insert({
+		title: data.title,
+		incredients: data.incredients,
+		description: data.description,
+		portions: data.portions,
 	});
     if (error) {
         console.error('Error inserting data:', error);
